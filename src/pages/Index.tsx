@@ -98,7 +98,7 @@ const Index = () => {
         })}
       </div>
 
-      <CartFAB totalItems={totalItems} totalPrice={totalPrice} animate={cartAnimate} />
+      <CartFAB totalItems={totalItems} totalPrice={totalPrice} animate={cartAnimate} cart={cart} menuItems={menuItems} />
     </div>
   );
 };
