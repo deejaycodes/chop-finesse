@@ -10,6 +10,7 @@ import { categories, menuItems } from "@/data/menu";
 const Index = () => {
   const [activeCategory, setActiveCategory] = useState(categories[0]);
   const [cart, setCart] = useState<Record<string, number>>({});
+  const [cartFlavors, setCartFlavors] = useState<Record<string, string[]>>({});
   const [cartAnimate, setCartAnimate] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [orderNote, setOrderNote] = useState("");
@@ -24,8 +25,11 @@ const Index = () => {
     setTimeout(() => { isScrolling.current = false; }, 600);
   };
 
-  const addItem = useCallback((id: string) => {
+  const addItem = useCallback((id: string, flavor?: string) => {
     setCart((prev) => ({ ...prev, [id]: (prev[id] || 0) + 1 }));
+    if (flavor) {
+      setCartFlavors((prev) => ({ ...prev, [id]: [...(prev[id] || []), flavor] }));
+    }
     setCartAnimate(true);
     setTimeout(() => setCartAnimate(false), 300);
   }, []);
@@ -37,10 +41,17 @@ const Index = () => {
       else delete next[id];
       return next;
     });
+    setCartFlavors((prev) => {
+      const next = { ...prev };
+      if (next[id]?.length > 1) next[id] = next[id].slice(0, -1);
+      else delete next[id];
+      return next;
+    });
   }, []);
 
   const clearCart = useCallback(() => {
     setCart({});
+    setCartFlavors({});
     setOrderNote("");
     setDrawerOpen(false);
   }, []);
@@ -61,7 +72,7 @@ const Index = () => {
   }, [searchQuery, isSearching]);
 
   const handleSendWhatsApp = () => {
-    const msg = buildWhatsAppMessage(cart, menuItems, totalPrice, orderNote);
+    const msg = buildWhatsAppMessage(cart, menuItems, totalPrice, orderNote, cartFlavors);
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, "_blank");
   };
 
@@ -129,7 +140,7 @@ const Index = () => {
                   key={item.id}
                   item={item}
                   quantity={cart[item.id] || 0}
-                  onAdd={() => addItem(item.id)}
+                  onAdd={(flavor) => addItem(item.id, flavor)}
                   onRemove={() => removeItem(item.id)}
                 />
               ))}
@@ -156,7 +167,7 @@ const Index = () => {
                       key={item.id}
                       item={item}
                       quantity={cart[item.id] || 0}
-                      onAdd={() => addItem(item.id)}
+                      onAdd={(flavor) => addItem(item.id, flavor)}
                       onRemove={() => removeItem(item.id)}
                     />
                   ))}

@@ -13,6 +13,8 @@ export interface MenuItem {
   image: string;
   category: string;
   tag?: string;
+  popular?: boolean;
+  flavors?: string[];
 }
 
 export const categories = [
@@ -21,6 +23,15 @@ export const categories = [
   "Sides",
   "Salads",
   "Add-Ons",
+];
+
+export const wingFlavors = [
+  "🔥 Spicy Pepper",
+  "🍯 Honey Garlic",
+  "🍋 Lemon Pepper",
+  "🌶 Sweet Chili",
+  "🔥 Buffalo Heat",
+  "⭐ Chop Finesse Special",
 ];
 
 export const menuItems: MenuItem[] = [
@@ -39,6 +50,7 @@ export const menuItems: MenuItem[] = [
     price: 8500,
     image: fusionBoxImg,
     category: "Fusion Boxes",
+    popular: true,
   },
   {
     id: "big-chop-box",
@@ -47,6 +59,7 @@ export const menuItems: MenuItem[] = [
     price: 12000,
     image: fusionBoxImg,
     category: "Fusion Boxes",
+    popular: true,
   },
   {
     id: "chop-party-box",
@@ -60,18 +73,21 @@ export const menuItems: MenuItem[] = [
   {
     id: "wings-4",
     name: "Signature Wings (4pc)",
-    description: "🔥 Spicy Pepper · 🍯 Honey Garlic · 🍋 Lemon Pepper · 🌶 Sweet Chili · 🔥 Buffalo Heat · ⭐ Chop Finesse Special",
+    description: "Pick your favorite flavor!",
     price: 4000,
     image: wingsImg,
     category: "Signature Wings",
+    flavors: wingFlavors,
+    popular: true,
   },
   {
     id: "wings-8",
     name: "Signature Wings (8pc)",
-    description: "🔥 Spicy Pepper · 🍯 Honey Garlic · 🍋 Lemon Pepper · 🌶 Sweet Chili · 🔥 Buffalo Heat · ⭐ Chop Finesse Special",
+    description: "Pick your favorite flavor!",
     price: 6000,
     image: wingsImg,
     category: "Signature Wings",
+    flavors: wingFlavors,
   },
   {
     id: "fries",

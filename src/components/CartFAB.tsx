@@ -13,10 +13,16 @@ const formatPrice = (price: number) =>
 
 export const WHATSAPP_NUMBER = "2347025304362";
 
-export const buildWhatsAppMessage = (cart: Record<string, number>, menuItems: MenuItem[], totalPrice: number, note: string) => {
+export const buildWhatsAppMessage = (cart: Record<string, number>, menuItems: MenuItem[], totalPrice: number, note: string, cartFlavors?: Record<string, string[]>) => {
   const lines = Object.entries(cart).map(([id, qty]) => {
     const item = menuItems.find((i) => i.id === id);
-    return item ? `• ${qty}x ${item.name} — ${formatPrice(item.price * qty)}` : "";
+    if (!item) return "";
+    let line = `• ${qty}x ${item.name} — ${formatPrice(item.price * qty)}`;
+    const flavors = cartFlavors?.[id];
+    if (flavors?.length) {
+      line += `\n  Flavors: ${flavors.join(", ")}`;
+    }
+    return line;
   }).filter(Boolean);
 
   let msg = `🍗 *New Order from Chop Finesse Menu*\n\n${lines.join("\n")}\n\n*Total: ${formatPrice(totalPrice)}*`;
