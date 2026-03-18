@@ -1,5 +1,6 @@
 import { ShoppingBag } from "lucide-react";
 import type { MenuItem } from "@/data/menu";
+import type { RecipientInfo } from "@/components/OrderDrawer";
 
 interface CartFABProps {
   totalItems: number;
