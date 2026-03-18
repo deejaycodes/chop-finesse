@@ -13,6 +13,7 @@ const Index = () => {
   const [cartAnimate, setCartAnimate] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [orderNote, setOrderNote] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const isScrolling = useRef(false);
 
