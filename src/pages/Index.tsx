@@ -1,4 +1,5 @@
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useState, useCallback, useRef, useEffect, useMemo } from "react";
+import { Search, X } from "lucide-react";
 import MenuHeader from "@/components/MenuHeader";
 import CategoryBar from "@/components/CategoryBar";
 import MenuItemCard from "@/components/MenuItemCard";
