@@ -76,7 +76,7 @@ export const menuItems: MenuItem[] = [
     image: wingsImg,
     category: "Signature Wings",
     flavors: wingFlavors,
-    popular: true,
+    
   },
   {
     id: "wings-8",
