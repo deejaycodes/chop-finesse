@@ -72,7 +72,7 @@ const Index = () => {
   }, [searchQuery, isSearching]);
 
   const handleSendWhatsApp = () => {
-    const msg = buildWhatsAppMessage(cart, menuItems, totalPrice, orderNote);
+    const msg = buildWhatsAppMessage(cart, menuItems, totalPrice, orderNote, cartFlavors);
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, "_blank");
   };
 
