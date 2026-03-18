@@ -41,10 +41,17 @@ const Index = () => {
       else delete next[id];
       return next;
     });
+    setCartFlavors((prev) => {
+      const next = { ...prev };
+      if (next[id]?.length > 1) next[id] = next[id].slice(0, -1);
+      else delete next[id];
+      return next;
+    });
   }, []);
 
   const clearCart = useCallback(() => {
     setCart({});
+    setCartFlavors({});
     setOrderNote("");
     setDrawerOpen(false);
   }, []);
