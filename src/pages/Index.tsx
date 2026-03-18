@@ -51,6 +51,15 @@ const Index = () => {
     return sum + (item?.price || 0) * qty;
   }, 0);
 
+  const isSearching = searchQuery.trim().length > 0;
+  const filteredItems = useMemo(() => {
+    if (!isSearching) return menuItems;
+    const q = searchQuery.toLowerCase();
+    return menuItems.filter(
+      (i) => i.name.toLowerCase().includes(q) || i.description.toLowerCase().includes(q) || i.category.toLowerCase().includes(q)
+    );
+  }, [searchQuery, isSearching]);
+
   const handleSendWhatsApp = () => {
     const msg = buildWhatsAppMessage(cart, menuItems, totalPrice, orderNote);
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, "_blank");
