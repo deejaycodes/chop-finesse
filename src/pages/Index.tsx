@@ -10,6 +10,7 @@ import { categories, menuItems } from "@/data/menu";
 const Index = () => {
   const [activeCategory, setActiveCategory] = useState(categories[0]);
   const [cart, setCart] = useState<Record<string, number>>({});
+  const [cartFlavors, setCartFlavors] = useState<Record<string, string[]>>({});
   const [cartAnimate, setCartAnimate] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [orderNote, setOrderNote] = useState("");
@@ -24,8 +25,11 @@ const Index = () => {
     setTimeout(() => { isScrolling.current = false; }, 600);
   };
 
-  const addItem = useCallback((id: string) => {
+  const addItem = useCallback((id: string, flavor?: string) => {
     setCart((prev) => ({ ...prev, [id]: (prev[id] || 0) + 1 }));
+    if (flavor) {
+      setCartFlavors((prev) => ({ ...prev, [id]: [...(prev[id] || []), flavor] }));
+    }
     setCartAnimate(true);
     setTimeout(() => setCartAnimate(false), 300);
   }, []);
