@@ -50,7 +50,6 @@ export const menuItems: MenuItem[] = [
     price: 8500,
     image: fusionBoxImg,
     category: "Fusion Boxes",
-    popular: true,
   },
   {
     id: "big-chop-box",
