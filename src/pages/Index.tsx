@@ -2,13 +2,16 @@ import { useState, useCallback, useRef, useEffect } from "react";
 import MenuHeader from "@/components/MenuHeader";
 import CategoryBar from "@/components/CategoryBar";
 import MenuItemCard from "@/components/MenuItemCard";
-import CartFAB from "@/components/CartFAB";
+import CartFAB, { buildWhatsAppMessage, WHATSAPP_NUMBER } from "@/components/CartFAB";
+import OrderDrawer from "@/components/OrderDrawer";
 import { categories, menuItems } from "@/data/menu";
 
 const Index = () => {
   const [activeCategory, setActiveCategory] = useState(categories[0]);
   const [cart, setCart] = useState<Record<string, number>>({});
   const [cartAnimate, setCartAnimate] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [orderNote, setOrderNote] = useState("");
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const isScrolling = useRef(false);
 
@@ -34,11 +37,22 @@ const Index = () => {
     });
   }, []);
 
+  const clearCart = useCallback(() => {
+    setCart({});
+    setOrderNote("");
+    setDrawerOpen(false);
+  }, []);
+
   const totalItems = Object.values(cart).reduce((a, b) => a + b, 0);
   const totalPrice = Object.entries(cart).reduce((sum, [id, qty]) => {
     const item = menuItems.find((i) => i.id === id);
     return sum + (item?.price || 0) * qty;
   }, 0);
+
+  const handleSendWhatsApp = () => {
+    const msg = buildWhatsAppMessage(cart, menuItems, totalPrice, orderNote);
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, "_blank");
+  };
 
   // Intersection observer for scroll-based category highlight
   useEffect(() => {
@@ -98,7 +112,21 @@ const Index = () => {
         })}
       </div>
 
-      <CartFAB totalItems={totalItems} totalPrice={totalPrice} animate={cartAnimate} cart={cart} menuItems={menuItems} />
+      <CartFAB totalItems={totalItems} totalPrice={totalPrice} animate={cartAnimate} onClick={() => setDrawerOpen(true)} />
+      <OrderDrawer
+        open={drawerOpen}
+        onOpenChange={setDrawerOpen}
+        cart={cart}
+        menuItems={menuItems}
+        totalPrice={totalPrice}
+        totalItems={totalItems}
+        note={orderNote}
+        onNoteChange={setOrderNote}
+        onAdd={addItem}
+        onRemove={removeItem}
+        onClear={clearCart}
+        onSendWhatsApp={handleSendWhatsApp}
+      />
     </div>
   );
 };
