@@ -167,7 +167,7 @@ const Index = () => {
                       key={item.id}
                       item={item}
                       quantity={cart[item.id] || 0}
-                      onAdd={() => addItem(item.id)}
+                      onAdd={(flavor) => addItem(item.id, flavor)}
                       onRemove={() => removeItem(item.id)}
                     />
                   ))}
