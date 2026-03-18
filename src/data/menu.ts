@@ -13,7 +13,7 @@ export interface MenuItem {
   image: string;
   category: string;
   tag?: string;
-  popular?: boolean;
+  
   flavors?: string[];
 }
 
@@ -50,7 +50,6 @@ export const menuItems: MenuItem[] = [
     price: 8500,
     image: fusionBoxImg,
     category: "Fusion Boxes",
-    popular: true,
   },
   {
     id: "big-chop-box",
@@ -59,7 +58,6 @@ export const menuItems: MenuItem[] = [
     price: 12000,
     image: fusionBoxImg,
     category: "Fusion Boxes",
-    popular: true,
   },
   {
     id: "chop-party-box",
@@ -78,7 +76,7 @@ export const menuItems: MenuItem[] = [
     image: wingsImg,
     category: "Signature Wings",
     flavors: wingFlavors,
-    popular: true,
+    
   },
   {
     id: "wings-8",

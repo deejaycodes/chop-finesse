@@ -1,4 +1,5 @@
-import { Plus, Minus, Trash2, Send, StickyNote } from "lucide-react";
+import { useState } from "react";
+import { Plus, Minus, Trash2, Send, StickyNote, UserPlus } from "lucide-react";
 import {
   Drawer,
   DrawerContent,
@@ -9,6 +10,12 @@ import {
 } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
 import type { MenuItem } from "@/data/menu";
+
+export interface RecipientInfo {
+  name: string;
+  phone: string;
+  address: string;
+}
 
 interface OrderDrawerProps {
   open: boolean;
@@ -22,7 +29,7 @@ interface OrderDrawerProps {
   onAdd: (id: string) => void;
   onRemove: (id: string) => void;
   onClear: () => void;
-  onSendWhatsApp: () => void;
+  onSendWhatsApp: (recipient?: RecipientInfo) => void;
 }
 
 const formatPrice = (price: number) => "₦" + price.toLocaleString();
@@ -41,12 +48,22 @@ const OrderDrawer = ({
   onClear,
   onSendWhatsApp,
 }: OrderDrawerProps) => {
+  const [forSomeone, setForSomeone] = useState(false);
+  const [recipient, setRecipient] = useState<RecipientInfo>({ name: "", phone: "", address: "" });
+
   const cartEntries = Object.entries(cart)
     .map(([id, qty]) => {
       const item = menuItems.find((i) => i.id === id);
       return item ? { item, qty } : null;
     })
     .filter(Boolean) as { item: MenuItem; qty: number }[];
+
+  const handleSend = () => {
+    onSendWhatsApp(forSomeone && recipient.name.trim() ? recipient : undefined);
+  };
+
+  const inputClass =
+    "w-full rounded-lg border border-border bg-background px-3 py-2 text-sm font-body text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30";
 
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
@@ -113,9 +130,50 @@ const OrderDrawer = ({
                   value={note}
                   onChange={(e) => onNoteChange(e.target.value)}
                   placeholder="E.g. Extra spicy wings, no onions..."
-                  className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm font-body text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 resize-none"
+                  className={`${inputClass} resize-none`}
                   rows={2}
                 />
+              </div>
+
+              {/* Order for Someone Else */}
+              <div className="mt-1">
+                <button
+                  onClick={() => setForSomeone((p) => !p)}
+                  className={`flex items-center gap-1.5 text-sm font-semibold font-body mb-1.5 transition-colors ${
+                    forSomeone ? "text-primary" : "text-foreground"
+                  }`}
+                >
+                  <UserPlus className="h-4 w-4" />
+                  {forSomeone ? "Ordering for someone else" : "Order for someone else?"}
+                </button>
+                {forSomeone && (
+                  <div className="flex flex-col gap-2">
+                    <input
+                      type="text"
+                      value={recipient.name}
+                      onChange={(e) => setRecipient((r) => ({ ...r, name: e.target.value }))}
+                      placeholder="Recipient's name"
+                      className={inputClass}
+                      maxLength={100}
+                    />
+                    <input
+                      type="tel"
+                      value={recipient.phone}
+                      onChange={(e) => setRecipient((r) => ({ ...r, phone: e.target.value }))}
+                      placeholder="Recipient's phone number"
+                      className={inputClass}
+                      maxLength={20}
+                    />
+                    <input
+                      type="text"
+                      value={recipient.address}
+                      onChange={(e) => setRecipient((r) => ({ ...r, address: e.target.value }))}
+                      placeholder="Delivery address"
+                      className={inputClass}
+                      maxLength={200}
+                    />
+                  </div>
+                )}
               </div>
             </div>
           )}
@@ -124,7 +182,7 @@ const OrderDrawer = ({
         <DrawerFooter className="pt-2 gap-2">
           {cartEntries.length > 0 && (
             <>
-              <Button onClick={onSendWhatsApp} className="w-full gap-2 font-body text-base py-5">
+              <Button onClick={handleSend} className="w-full gap-2 font-body text-base py-5">
                 <Send className="h-4 w-4" />
                 Send Order on WhatsApp · {formatPrice(totalPrice)}
               </Button>

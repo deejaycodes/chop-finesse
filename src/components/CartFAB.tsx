@@ -1,5 +1,6 @@
 import { ShoppingBag } from "lucide-react";
 import type { MenuItem } from "@/data/menu";
+import type { RecipientInfo } from "@/components/OrderDrawer";
 
 interface CartFABProps {
   totalItems: number;
@@ -13,7 +14,7 @@ const formatPrice = (price: number) =>
 
 export const WHATSAPP_NUMBER = "2347025304362";
 
-export const buildWhatsAppMessage = (cart: Record<string, number>, menuItems: MenuItem[], totalPrice: number, note: string, cartFlavors?: Record<string, string[]>) => {
+export const buildWhatsAppMessage = (cart: Record<string, number>, menuItems: MenuItem[], totalPrice: number, note: string, cartFlavors?: Record<string, string[]>, recipient?: RecipientInfo) => {
   const lines = Object.entries(cart).map(([id, qty]) => {
     const item = menuItems.find((i) => i.id === id);
     if (!item) return "";
@@ -28,6 +29,11 @@ export const buildWhatsAppMessage = (cart: Record<string, number>, menuItems: Me
   let msg = `🍗 *New Order from Chop Finesse Menu*\n\n${lines.join("\n")}\n\n*Total: ${formatPrice(totalPrice)}*`;
   if (note.trim()) {
     msg += `\n\n📝 *Note:* ${note.trim()}`;
+  }
+  if (recipient?.name.trim()) {
+    msg += `\n\n👤 *Deliver to:*\nName: ${recipient.name.trim()}`;
+    if (recipient.phone.trim()) msg += `\nPhone: ${recipient.phone.trim()}`;
+    if (recipient.address.trim()) msg += `\nAddress: ${recipient.address.trim()}`;
   }
   return encodeURIComponent(msg);
 };
