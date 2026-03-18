@@ -71,8 +71,8 @@ const Index = () => {
     );
   }, [searchQuery, isSearching]);
 
-  const handleSendWhatsApp = () => {
-    const msg = buildWhatsAppMessage(cart, menuItems, totalPrice, orderNote, cartFlavors);
+  const handleSendWhatsApp = (recipient?: RecipientInfo) => {
+    const msg = buildWhatsAppMessage(cart, menuItems, totalPrice, orderNote, cartFlavors, recipient);
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, "_blank");
   };
 
