@@ -28,17 +28,9 @@ const MenuItemCard = ({ item, quantity, onAdd, onRemove }: MenuItemCardProps) =>
     <>
       <div className="flex gap-3 rounded-lg bg-card p-3 shadow-sm border border-border">
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-1.5">
             <h3 className="font-display text-base font-bold text-card-foreground leading-tight">
               {item.name}
             </h3>
-            {item.popular && (
-              <span className="inline-flex items-center gap-0.5 rounded-full bg-accent px-1.5 py-0.5 text-[10px] font-bold text-accent-foreground">
-                <TrendingUp className="h-2.5 w-2.5" />
-                Popular
-              </span>
-            )}
-          </div>
           {item.tag && (
             <span className="mt-1 inline-block rounded-full bg-accent px-2 py-0.5 text-xs font-semibold text-accent-foreground">
               {item.tag}
