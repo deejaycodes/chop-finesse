@@ -60,7 +60,7 @@ export const menuItems: MenuItem[] = [
   {
     id: "wings-4",
     name: "Signature Wings (4pc)",
-    description: "Choose: Spicy Pepper, Honey Garlic, Lemon Pepper, Sweet Chili, Buffalo Heat, or Chop Finesse Special",
+    description: "🔥 Spicy Pepper · 🍯 Honey Garlic · 🍋 Lemon Pepper · 🌶 Sweet Chili · 🔥 Buffalo Heat · ⭐ Chop Finesse Special",
     price: 4000,
     image: wingsImg,
     category: "Signature Wings",
@@ -68,7 +68,7 @@ export const menuItems: MenuItem[] = [
   {
     id: "wings-8",
     name: "Signature Wings (8pc)",
-    description: "Choose: Spicy Pepper, Honey Garlic, Lemon Pepper, Sweet Chili, Buffalo Heat, or Chop Finesse Special",
+    description: "🔥 Spicy Pepper · 🍯 Honey Garlic · 🍋 Lemon Pepper · 🌶 Sweet Chili · 🔥 Buffalo Heat · ⭐ Chop Finesse Special",
     price: 6000,
     image: wingsImg,
     category: "Signature Wings",
