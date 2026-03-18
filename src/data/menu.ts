@@ -13,6 +13,8 @@ export interface MenuItem {
   image: string;
   category: string;
   tag?: string;
+  popular?: boolean;
+  flavors?: string[];
 }
 
 export const categories = [
