@@ -93,34 +93,78 @@ const Index = () => {
       <MenuHeader />
       <CategoryBar activeCategory={activeCategory} onCategoryChange={handleCategoryChange} />
 
-      <div className="px-3 pt-3">
-        {categories.map((cat) => {
-          const items = menuItems.filter((i) => i.category === cat);
-          if (items.length === 0) return null;
-          return (
-            <div
-              key={cat}
-              ref={(el) => { sectionRefs.current[cat] = el; }}
-              data-section={cat}
-              className="mb-6 scroll-mt-14"
+      {/* Search Bar */}
+      <div className="px-3 pt-3 pb-1">
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search menu..."
+            className="w-full rounded-lg border border-border bg-card py-2.5 pl-9 pr-9 text-sm font-body text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30"
+          />
+          {searchQuery && (
+            <button
+              onClick={() => setSearchQuery("")}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
             >
-              <h2 className="font-display text-xl font-bold text-foreground mb-3 pl-1">
-                {cat}
-              </h2>
-              <div className="flex flex-col gap-2">
-                {items.map((item) => (
-                  <MenuItemCard
-                    key={item.id}
-                    item={item}
-                    quantity={cart[item.id] || 0}
-                    onAdd={() => addItem(item.id)}
-                    onRemove={() => removeItem(item.id)}
-                  />
-                ))}
-              </div>
+              <X className="h-4 w-4" />
+            </button>
+          )}
+        </div>
+      </div>
+
+      <div className="px-3 pt-2">
+        {isSearching ? (
+          // Search results view
+          filteredItems.length === 0 ? (
+            <p className="py-12 text-center text-muted-foreground font-body">
+              No items found for "{searchQuery}"
+            </p>
+          ) : (
+            <div className="flex flex-col gap-2">
+              {filteredItems.map((item) => (
+                <MenuItemCard
+                  key={item.id}
+                  item={item}
+                  quantity={cart[item.id] || 0}
+                  onAdd={() => addItem(item.id)}
+                  onRemove={() => removeItem(item.id)}
+                />
+              ))}
             </div>
-          );
-        })}
+          )
+        ) : (
+          // Category view
+          categories.map((cat) => {
+            const items = menuItems.filter((i) => i.category === cat);
+            if (items.length === 0) return null;
+            return (
+              <div
+                key={cat}
+                ref={(el) => { sectionRefs.current[cat] = el; }}
+                data-section={cat}
+                className="mb-6 scroll-mt-14"
+              >
+                <h2 className="font-display text-xl font-bold text-foreground mb-3 pl-1">
+                  {cat}
+                </h2>
+                <div className="flex flex-col gap-2">
+                  {items.map((item) => (
+                    <MenuItemCard
+                      key={item.id}
+                      item={item}
+                      quantity={cart[item.id] || 0}
+                      onAdd={() => addItem(item.id)}
+                      onRemove={() => removeItem(item.id)}
+                    />
+                  ))}
+                </div>
+              </div>
+            );
+          })
+        )}
       </div>
 
       <CartFAB totalItems={totalItems} totalPrice={totalPrice} animate={cartAnimate} onClick={() => setDrawerOpen(true)} />
