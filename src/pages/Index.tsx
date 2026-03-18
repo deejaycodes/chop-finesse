@@ -4,7 +4,7 @@ import MenuHeader from "@/components/MenuHeader";
 import CategoryBar from "@/components/CategoryBar";
 import MenuItemCard from "@/components/MenuItemCard";
 import CartFAB, { buildWhatsAppMessage, WHATSAPP_NUMBER } from "@/components/CartFAB";
-import OrderDrawer from "@/components/OrderDrawer";
+import OrderDrawer, { type RecipientInfo } from "@/components/OrderDrawer";
 import { categories, menuItems } from "@/data/menu";
 
 const Index = () => {
