@@ -107,8 +107,10 @@ const Index = () => {
       {/* Search Bar */}
       <div className="px-3 pt-3 pb-1">
         <div className="relative">
+          <label htmlFor="menu-search" className="sr-only">Search menu</label>
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <input
+            id="menu-search"
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -156,7 +158,7 @@ const Index = () => {
                 key={cat}
                 ref={(el) => { sectionRefs.current[cat] = el; }}
                 data-section={cat}
-                className="mb-6 scroll-mt-14"
+                className="mb-6 scroll-mt-32"
               >
                 <h2 className="font-display text-xl font-bold text-foreground mb-3 pl-1">
                   {cat}

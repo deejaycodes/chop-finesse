@@ -103,6 +103,7 @@ const OrderDrawer = ({
                   <div className="flex items-center gap-1">
                     <button
                       onClick={() => onRemove(item.id)}
+                      aria-label={`Remove one ${item.name}`}
                       className="flex h-7 w-7 items-center justify-center rounded-full border border-border text-muted-foreground hover:bg-muted transition-colors"
                     >
                       <Minus className="h-3.5 w-3.5" />
@@ -112,6 +113,7 @@ const OrderDrawer = ({
                     </span>
                     <button
                       onClick={() => onAdd(item.id)}
+                      aria-label={`Add one more ${item.name}`}
                       className="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-primary-foreground hover:opacity-90 transition-all"
                     >
                       <Plus className="h-3.5 w-3.5" />

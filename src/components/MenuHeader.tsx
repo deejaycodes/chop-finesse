@@ -37,7 +37,7 @@ const MenuHeader = () => {
         </h1>
         <Flame className="h-7 w-7 text-accent" />
       </div>
-      <p className="mt-1 text-sm italic text-muted-foreground font-display">
+      <p className="mt-1 text-sm italic text-primary-foreground/70 font-display">
         Finesse Your Tastebuds.
       </p>
     </header>

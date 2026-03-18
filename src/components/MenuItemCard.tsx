@@ -48,6 +48,7 @@ const MenuItemCard = ({ item, quantity, onAdd, onRemove }: MenuItemCardProps) =>
                 <>
                   <button
                     onClick={onRemove}
+                    aria-label={`Remove one ${item.name}`}
                     className="flex h-7 w-7 items-center justify-center rounded-full border border-border text-muted-foreground hover:bg-muted transition-colors"
                   >
                     <Minus className="h-3.5 w-3.5" />
@@ -59,6 +60,7 @@ const MenuItemCard = ({ item, quantity, onAdd, onRemove }: MenuItemCardProps) =>
               )}
               <button
                 onClick={handleAdd}
+                aria-label={`Add ${item.name}`}
                 className="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-primary-foreground hover:opacity-90 transition-all active:scale-95"
               >
                 <Plus className="h-3.5 w-3.5" />
