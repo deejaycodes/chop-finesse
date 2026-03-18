@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Plus, Minus, TrendingUp } from "lucide-react";
+import { Plus, Minus } from "lucide-react";
 import type { MenuItem } from "@/data/menu";
 import FlavorPicker from "@/components/FlavorPicker";
 
