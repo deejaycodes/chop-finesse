@@ -91,7 +91,7 @@ const Index = () => {
               key={cat}
               ref={(el) => { sectionRefs.current[cat] = el; }}
               data-section={cat}
-              className="mb-6"
+              className="mb-6 scroll-mt-14"
             >
               <h2 className="font-display text-xl font-bold text-foreground mb-3 pl-1">
                 {cat}
